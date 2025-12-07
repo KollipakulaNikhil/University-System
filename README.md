@@ -464,3 +464,14 @@ attendance updates
 
 This project is open-source and available under the MIT License.
 >>>>>>> b04bad2 (Updated some code)
+
+## Cloud Deployment (Vercel)
+
+When deploying to Vercel, you must use a cloud database (e.g., Aiven, PlanetScale) instead of a local one.
+Configure the following Environment Variables in Vercel:
+- `DB_HOST`
+- `DB_USER`
+- `DB_PASSWORD`
+- `DB_NAME`
+- `DB_PORT`
+- `DB_SSL` (set to "true")
