@@ -6,12 +6,13 @@ import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function GET(
     request: Request,
-    { params }: { params: { code: string } }
+    { params }: { params: Promise<{ code: string }> }
 ) {
+    const { code } = await params;
     try {
         const [rows] = await pool.query<RowDataPacket[]>(
             'SELECT * FROM courses WHERE code = ?',
-            [params.code]
+            [code]
         );
 
         if (rows.length === 0) {
@@ -26,8 +27,9 @@ export async function GET(
 
 export async function PUT(
     request: Request,
-    { params }: { params: { code: string } }
+    { params }: { params: Promise<{ code: string }> }
 ) {
+    const { code } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session || session.user.role !== 'admin') {
@@ -39,7 +41,7 @@ export async function PUT(
 
         const [result] = await pool.query<ResultSetHeader>(
             'UPDATE courses SET title = ?, credits = ?, program_id = ? WHERE code = ?',
-            [title, credits, program_id, params.code]
+            [title, credits, program_id, code]
         );
 
         if (result.affectedRows === 0) {
@@ -54,8 +56,9 @@ export async function PUT(
 
 export async function DELETE(
     request: Request,
-    { params }: { params: { code: string } }
+    { params }: { params: Promise<{ code: string }> }
 ) {
+    const { code } = await params;
     const session = await getServerSession(authOptions);
 
     if (!session || session.user.role !== 'admin') {
@@ -65,7 +68,7 @@ export async function DELETE(
     try {
         const [result] = await pool.query<ResultSetHeader>(
             'DELETE FROM courses WHERE code = ?',
-            [params.code]
+            [code]
         );
 
         if (result.affectedRows === 0) {

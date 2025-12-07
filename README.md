@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 📘 University Course Registration & Timetabling System
 
 A full-stack web application for managing university academic processes, including course registration, timetabling, attendance tracking, grading, and disciplinary actions.
@@ -66,6 +67,52 @@ Admin	Full control of system & academic entities
 Instructor	Manages sections, attendance, grades
 Student	Registers for sections, views timetable, grades, attendance
 🗄️ ER Diagram
+=======
+# University Course Registration & Timetabling System
+
+A comprehensive full-stack web application for managing university academic processes, including course registration, timetabling, grading, disciplinary actions, and attendance tracking.
+
+## 🚀 Features
+
+### User Roles
+- **Students**: 
+  - View available courses and sections.
+  - Register for courses (with conflict detection).
+  - View personal timetable.
+  - View grades and attendance statistics.
+  - Blocked access when suspended.
+- **Instructors**:
+  - Manage assigned sections.
+  - View enrolled students.
+  - Enter grades.
+  - Mark attendance (Present/Absent/Excused).
+  - Report disciplinary issues.
+- **Admins**:
+  - Dashboard with system analytics.
+  - Manage users (Students, Instructors).
+  - View and resolve disciplinary reports (Suspend/Revoke Suspension).
+  - Manage courses and sections.
+
+### Key Functionalities
+- **Transactional Enrollment**: Ensures data integrity during high-concurrency registration periods, with deadlock simulation and resolution.
+- **Role-Based Access Control (RBAC)**: Secure access to features based on user roles (Student, Instructor, Admin).
+- **Disciplinary System**: Full workflow for reporting, suspending, and revoking suspensions for students.
+- **Attendance Tracking**: Instructors can mark attendance, and students can view their attendance percentage per course.
+- **Real-time Availability**: Dynamic updates of seat availability in course sections.
+
+## 🛠️ Tech Stack
+
+- **Frontend**: [Next.js](https://nextjs.org/) (React framework), Tailwind CSS, Lucide React (Icons).
+- **Backend**: Next.js API Routes (Serverless functions).
+- **Database**: MySQL (relational database).
+- **Authentication**: [NextAuth.js](https://next-auth.js.org/) (Credentials provider).
+- **Language**: TypeScript.
+- **Containerization**: Docker & Docker Compose.
+
+## 📋 Database Schema (ER Diagram)
+
+```mermaid
+>>>>>>> b04bad2 (Updated some code)
 erDiagram
     USERS ||--o{ ENROLLMENTS : "enrolls in"
     USERS ||--o{ SECTIONS : "teaches"
@@ -89,17 +136,29 @@ erDiagram
         enum role "student, instructor, admin"
         timestamp suspended_until
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b04bad2 (Updated some code)
     PROGRAMS {
         int id PK
         string name
         string code
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b04bad2 (Updated some code)
     COURSES {
         string code PK
         string title
         int credits
         int program_id FK
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b04bad2 (Updated some code)
     SECTIONS {
         int id PK
         string course_code FK
@@ -111,6 +170,10 @@ erDiagram
         int capacity
         int enrolled
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b04bad2 (Updated some code)
     ENROLLMENTS {
         int id PK
         int student_id FK
@@ -118,17 +181,29 @@ erDiagram
         enum status "enrolled, dropped, waitlisted"
         string grade
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b04bad2 (Updated some code)
     ROOMS {
         int id PK
         string name
         int capacity
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b04bad2 (Updated some code)
     TIMESLOTS {
         int id PK
         enum day
         time start_time
         time end_time
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b04bad2 (Updated some code)
     DISCIPLINARY_REPORTS {
         int id PK
         int student_id FK
@@ -137,6 +212,10 @@ erDiagram
         enum status "pending, resolved, revoked"
         int suspension_days
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b04bad2 (Updated some code)
     ATTENDANCE {
         int id PK
         int student_id FK
@@ -144,6 +223,7 @@ erDiagram
         date date
         enum status "present, absent, excused"
     }
+<<<<<<< HEAD
 
 📌 Use Case Diagram
 usecaseDiagram
@@ -305,3 +385,82 @@ waitlist movement
 disciplinary checks
 
 attendance updates
+=======
+```
+
+## ⚙️ Setup Instructions
+
+### Prerequisites
+- Node.js (v18+)
+- Docker & Docker Compose
+- MySQL Client (optional, for manual DB inspection)
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd university-system
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Environment Configuration:**
+    Create a `.env` file in the root directory:
+    ```env
+    DB_HOST=localhost
+    DB_USER=university_user
+    DB_PASSWORD=university_password
+    DB_NAME=university_db
+    NEXTAUTH_SECRET=your_super_secret_key
+    NEXTAUTH_URL=http://localhost:3000
+    ```
+
+### Database Setup
+
+1.  **Start MySQL Container:**
+    ```bash
+    docker-compose up -d
+    ```
+
+2.  **Initialize Database Schema:**
+    ```bash
+    npx ts-node scripts/init_db.ts
+    ```
+    *Note: This script applies the initial schema and seeds default data.*
+
+3.  **Apply Additional Schema Updates:**
+    ```bash
+    npx ts-node scripts/update_schema.ts
+    npx ts-node scripts/update_schema_revocation.ts
+    npx ts-node scripts/update_schema_attendance.ts
+    ```
+
+### Running the Application
+
+1.  **Start the Development Server:**
+    ```bash
+    npm run dev
+    ```
+
+2.  **Access the App:**
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Default Credentials (Seeded Data)
+
+- **Admin**: `admin@university.com` / `admin123`
+- **Instructor**: `instructor@university.com` / `password123`
+- **Student**: `student@university.com` / `password123`
+
+## 🧪 Verification & Testing
+
+- **Scripts**: Various scripts in `scripts/` are available for testing database integrity, checking users, and simulating deadlocks.
+- **Browser Tool**: Automated verification steps are documented in `walkthrough.md`.
+
+## 📄 License
+
+This project is open-source and available under the MIT License.
+>>>>>>> b04bad2 (Updated some code)
