@@ -1,117 +1,89 @@
-📘 University Course Registration & Timetabling System
+# 📘 University Course Registration & Timetabling System
 
-A full-stack web application for managing university academic processes, including course registration, timetabling, attendance tracking, grading, and disciplinary actions.
-Designed with transactional safety, role-based access, and real-time seat availability.
+A full-stack web application for managing university academic processes, including **course registration**, **timetabling**, **attendance tracking**, **grading**, and **disciplinary actions**.  
+Designed with **transactional safety**, **role-based access control**, and **real-time seat availability**.
 
-🚀 Features
-👨‍🎓 Students
-
-View available courses & sections
-
-Register for sections (with:
-
-seat availability
-
-timetable clash detection
-
-View personal timetable
-
-View grades
-
-View attendance percentage
-
-Blocked access when suspended
-
-👨‍🏫 Instructors
-
-Manage assigned sections
-
-Create sections (time, room, capacity)
-
-View enrolled students
-
-Enter grades
-
-Mark attendance (Present/Absent/Excused)
-
-Report disciplinary issues
-
-🛡️ Admins
-
-Dashboard with system-wide analytics
-
-Manage programs, courses, sections
-
-Manage users (students, instructors)
-
-Review disciplinary reports
-
-Suspend / revoke suspension
-
-Override enrollment capacity
-
-🏛️ System Logic
-
-The system follows a strict academic workflow:
-
-1️⃣ Admin creates Program & Course
-2️⃣ Instructor creates Section (time, room, seat limit)
-3️⃣ Student registers
-4️⃣ Transaction updates seat count safely
-5️⃣ Student gets timetable + grades + attendance
-
-🔐 Role-Based Access Control (RBAC)
-Role	Permissions
-Admin	Full control of system & academic entities
-Instructor	Manages sections, attendance, grades
-Student	Registers for sections, views timetable, grades, attendance
-🗄️ ER Diagram
-=======
-# University Course Registration & Timetabling System
-
-A comprehensive full-stack web application for managing university academic processes, including course registration, timetabling, grading, disciplinary actions, and attendance tracking.
+---
 
 ## 🚀 Features
 
-### User Roles
-- **Students**: 
-  - View available courses and sections.
-  - Register for courses (with conflict detection).
-  - View personal timetable.
-  - View grades and attendance statistics.
-  - Blocked access when suspended.
-- **Instructors**:
-  - Manage assigned sections.
-  - View enrolled students.
-  - Enter grades.
-  - Mark attendance (Present/Absent/Excused).
-  - Report disciplinary issues.
-- **Admins**:
-  - Dashboard with system analytics.
-  - Manage users (Students, Instructors).
-  - View and resolve disciplinary reports (Suspend/Revoke Suspension).
-  - Manage courses and sections.
+### 👨‍🎓 Students
 
-### Key Functionalities
-- **Transactional Enrollment**: Ensures data integrity during high-concurrency registration periods, with deadlock simulation and resolution.
-- **Role-Based Access Control (RBAC)**: Secure access to features based on user roles (Student, Instructor, Admin).
-- **Disciplinary System**: Full workflow for reporting, suspending, and revoking suspensions for students.
-- **Attendance Tracking**: Instructors can mark attendance, and students can view their attendance percentage per course.
-- **Real-time Availability**: Dynamic updates of seat availability in course sections.
+- View available courses & sections  
+- Register for sections with:
+  - Real-time seat availability
+  - Timetable clash detection  
+- View personal timetable  
+- View grades  
+- View attendance percentage  
+- Blocked access when suspended  
+
+### 👨‍🏫 Instructors
+
+- Manage assigned sections  
+- Create sections (time, room, capacity)  
+- View enrolled students  
+- Enter grades  
+- Mark attendance (`Present` / `Absent` / `Excused`)  
+- Report disciplinary issues  
+
+### 🛡️ Admins
+
+- Dashboard with system-wide analytics  
+- Manage programs, courses, sections  
+- Manage users (students, instructors)  
+- Review disciplinary reports  
+- Suspend / revoke suspension  
+- Override enrollment capacity  
+
+---
+
+## 🏛️ System Logic
+
+The system follows a strict academic workflow:
+
+1. Admin creates **Program** & **Course**  
+2. Instructor creates **Section** (time, room, seat limit)  
+3. Student registers for a section  
+4. Transaction safely updates seat count (with deadlock handling)  
+5. Student gets timetable, grades, and attendance visibility  
+
+---
+
+## 🔐 Role-Based Access Control (RBAC)
+
+| Role       | Permissions                                                |
+|-----------|-------------------------------------------------------------|
+| **Admin**     | Full control of system & academic entities               |
+| **Instructor**| Manages sections, attendance, grades                     |
+| **Student**   | Registers for sections, views timetable, grades, attendance |
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: [Next.js](https://nextjs.org/) (React framework), Tailwind CSS, Lucide React (Icons).
-- **Backend**: Next.js API Routes (Serverless functions).
-- **Database**: MySQL (relational database).
-- **Authentication**: [NextAuth.js](https://next-auth.js.org/) (Credentials provider).
-- **Language**: TypeScript.
-- **Containerization**: Docker & Docker Compose.
+### Frontend
+- [Next.js](https://nextjs.org/) (React framework)  
+- Tailwind CSS  
+- Lucide React (Icons)  
+
+### Backend
+- Next.js API Routes (Serverless functions)  
+- TypeScript  
+- [NextAuth.js](https://next-auth.js.org/) (Credentials provider)  
+
+### Database
+- MySQL (relational database)  
+
+### Containerization & Deployment
+- Docker & Docker Compose  
+- Ready for deployment to platforms like Vercel with a managed MySQL database  
+
+---
 
 ## 📋 Database Schema (ER Diagram)
 
 ```mermaid
->>>>>>> b04bad2 (Updated some code)
 erDiagram
     USERS ||--o{ ENROLLMENTS : "enrolls in"
     USERS ||--o{ SECTIONS : "teaches"
@@ -135,29 +107,20 @@ erDiagram
         enum role "student, instructor, admin"
         timestamp suspended_until
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> b04bad2 (Updated some code)
     PROGRAMS {
         int id PK
         string name
         string code
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> b04bad2 (Updated some code)
     COURSES {
         string code PK
         string title
         int credits
         int program_id FK
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> b04bad2 (Updated some code)
     SECTIONS {
         int id PK
         string course_code FK
@@ -169,10 +132,7 @@ erDiagram
         int capacity
         int enrolled
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> b04bad2 (Updated some code)
     ENROLLMENTS {
         int id PK
         int student_id FK
@@ -180,29 +140,20 @@ erDiagram
         enum status "enrolled, dropped, waitlisted"
         string grade
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> b04bad2 (Updated some code)
     ROOMS {
         int id PK
         string name
         int capacity
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> b04bad2 (Updated some code)
     TIMESLOTS {
         int id PK
         enum day
         time start_time
         time end_time
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> b04bad2 (Updated some code)
     DISCIPLINARY_REPORTS {
         int id PK
         int student_id FK
@@ -211,10 +162,7 @@ erDiagram
         enum status "pending, resolved, revoked"
         int suspension_days
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> b04bad2 (Updated some code)
     ATTENDANCE {
         int id PK
         int student_id FK
@@ -222,9 +170,13 @@ erDiagram
         date date
         enum status "present, absent, excused"
     }
-<<<<<<< HEAD
+```
 
-📌 Use Case Diagram
+---
+
+## 📌 Use Case Diagram
+
+```mermaid
 usecaseDiagram
     actor Admin
     actor Instructor
@@ -249,8 +201,13 @@ usecaseDiagram
     Student --> (View Timetable)
     Student --> (View Grades)
     Student --> (View Attendance)
+```
 
-🔄 Flowchart: Main Logic (Admin → Instructor → Student)
+---
+
+## 🔄 Flowchart: Main Logic (Admin → Instructor → Student)
+
+```mermaid
 flowchart TD
     A[Start] --> B[Admin Creates Program]
     B --> C[Admin Creates Course]
@@ -274,8 +231,13 @@ flowchart TD
 
     W --> P
     M --> H
+```
 
-🔁 Sequence Diagram: Transactional Enrollment
+---
+
+## 🔁 Sequence Diagram: Transactional Enrollment
+
+```mermaid
 sequenceDiagram
     participant S as Student
     participant API as Enrollment API
@@ -287,42 +249,22 @@ sequenceDiagram
     DB-->>API: Seats Available?
     
     alt Seat Available
-        API->>DB: Insert into ENROLLMENTS
-        API->>DB: Update Sections.enrolled++
+        API->>DB: Insert into ENROLLMENTS (status: enrolled)
+        API->>DB: Update SECTIONS.enrolled++
         API->>DB: COMMIT
         API-->>S: Enrollment Successful
     else No Seats
-        API->>DB: Insert into ENROLLMENTS (waitlisted)
+        API->>DB: Insert into ENROLLMENTS (status: waitlisted)
         API->>DB: COMMIT
         API-->>S: Added to Waitlist
     end
+```
 
-🛠️ Tech Stack
-Frontend
+---
 
-Next.js (React)
+## 🗂️ Project Structure
 
-Tailwind CSS
-
-Lucide Icons
-
-Backend
-
-Next.js API Routes
-
-MySQL
-
-TypeScript
-
-NextAuth.js
-
-Deployment
-
-Docker
-
-Docker Compose
-
-🗂️ Project Structure
+```text
 university-system/
 │── src/
 │   ├── app/
@@ -333,144 +275,110 @@ university-system/
 │── prisma/ or schema.sql
 │── docker-compose.yml
 │── README.md
+```
 
-⚙️ Setup Instructions
-1️⃣ Install Dependencies
+---
+
+## ⚙️ Setup Instructions
+
+### Prerequisites
+
+- Node.js (v18+)
+- Docker & Docker Compose
+- MySQL client (optional, for manual DB inspection)
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone <repository-url>
+cd university-system
+```
+
+### 2️⃣ Install Dependencies
+
+```bash
 npm install
+```
 
-2️⃣ Create .env
+### 3️⃣ Environment Configuration
+
+Create a `.env` file in the root directory:
+
+```env
 DB_HOST=localhost
 DB_USER=university_user
 DB_PASSWORD=university_password
 DB_NAME=university_db
 NEXTAUTH_SECRET=your_super_secret_key
 NEXTAUTH_URL=http://localhost:3000
+```
 
-3️⃣ Run MySQL Container
+### 4️⃣ Start MySQL with Docker
+
+```bash
 docker-compose up -d
+```
 
-4️⃣ Initialize DB Schema
+### 5️⃣ Initialize Database Schema
+
+```bash
 npx ts-node scripts/init_db.ts
 npx ts-node scripts/update_schema.ts
 npx ts-node scripts/update_schema_revocation.ts
 npx ts-node scripts/update_schema_attendance.ts
-
-5️⃣ Start Application
-npm run dev
-
-🔑 Default Logins
-Role	Email	Password
-Admin	admin@university.com
-	admin123
-Instructor	instructor@university.com
-	password123
-Student	student@university.com
-	password123
-🧪 Testing & Verification
-
-Use:
-
-scripts/
-
-
-To simulate:
-
-seat limit
-
-enrollment deadlock
-
-waitlist movement
-
-disciplinary checks
-
-attendance updates
-=======
 ```
 
-## ⚙️ Setup Instructions
+### 6️⃣ Start the Development Server
 
-### Prerequisites
-- Node.js (v18+)
-- Docker & Docker Compose
-- MySQL Client (optional, for manual DB inspection)
+```bash
+npm run dev
+```
 
-### Installation
+Open: <http://localhost:3000>
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd university-system
-    ```
+---
 
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
+## 🔑 Default Logins
 
-3.  **Environment Configuration:**
-    Create a `.env` file in the root directory:
-    ```env
-    DB_HOST=localhost
-    DB_USER=university_user
-    DB_PASSWORD=university_password
-    DB_NAME=university_db
-    NEXTAUTH_SECRET=your_super_secret_key
-    NEXTAUTH_URL=http://localhost:3000
-    ```
+| Role       | Email                    | Password      |
+|-----------|--------------------------|---------------|
+| Admin     | admin@university.com     | admin123      |
+| Instructor| instructor@university.com| password123   |
+| Student   | student@university.com   | password123   |
 
-### Database Setup
+---
 
-1.  **Start MySQL Container:**
-    ```bash
-    docker-compose up -d
-    ```
+## 🧪 Testing & Verification
 
-2.  **Initialize Database Schema:**
-    ```bash
-    npx ts-node scripts/init_db.ts
-    ```
-    *Note: This script applies the initial schema and seeds default data.*
+Use the `scripts/` directory to simulate and verify:
 
-3.  **Apply Additional Schema Updates:**
-    ```bash
-    npx ts-node scripts/update_schema.ts
-    npx ts-node scripts/update_schema_revocation.ts
-    npx ts-node scripts/update_schema_attendance.ts
-    ```
+- Seat limit behavior  
+- Enrollment deadlocks  
+- Waitlist movement  
+- Disciplinary checks  
+- Attendance updates  
 
-### Running the Application
+Additional browser-based verification steps can be documented in `walkthrough.md`.
 
-1.  **Start the Development Server:**
-    ```bash
-    npm run dev
-    ```
-
-2.  **Access the App:**
-    Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Default Credentials (Seeded Data)
-
-- **Admin**: `admin@university.com` / `admin123`
-- **Instructor**: `instructor@university.com` / `password123`
-- **Student**: `student@university.com` / `password123`
-
-## 🧪 Verification & Testing
-
-- **Scripts**: Various scripts in `scripts/` are available for testing database integrity, checking users, and simulating deadlocks.
-- **Browser Tool**: Automated verification steps are documented in `walkthrough.md`.
+---
 
 ## 📄 License
 
-This project is open-source and available under the MIT License.
->>>>>>> b04bad2 (Updated some code)
+This project is open-source and available under the **MIT License**.
 
-## Cloud Deployment (Vercel)
+---
 
-When deploying to Vercel, you must use a cloud database (e.g., Aiven, PlanetScale) instead of a local one.
-Configure the following Environment Variables in Vercel:
+## ☁️ Cloud Deployment (Vercel)
+
+When deploying to Vercel, you must use a **cloud database** (e.g., Aiven, PlanetScale, etc.) instead of a local one.
+
+Configure these environment variables in Vercel:
+
 - `DB_HOST`
 - `DB_USER`
 - `DB_PASSWORD`
 - `DB_NAME`
 - `DB_PORT`
-- `DB_SSL` (set to "true")
+- `DB_SSL` (set to `"true"`)
+
+Ensure your cloud MySQL instance allows external connections from Vercel and uses SSL if required.
