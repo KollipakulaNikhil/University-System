@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 📘 University Course Registration & Timetabling System
 
 A full-stack web application for managing university academic processes, including course registration, timetabling, attendance tracking, grading, and disciplinary actions.
