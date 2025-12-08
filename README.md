@@ -1,101 +1,88 @@
 # 📘 University Course Registration & Timetabling System
 
-A full-stack web application for managing university academic processes, including **course registration**, **timetabling**, **attendance tracking**, **grading**, and **disciplinary actions**.  
-Designed with **transactional safety**, **role-based access control**, and **real-time seat availability**.
+A modern, full-stack academic management system supporting **course registration**, **timetabling**, **attendance tracking**, **grading**, and **disciplinary workflows**.  
+Built for **transactional safety**, **role-based access**, **real-time section availability**, and seamless academic operations.
 
 ---
 
-## 🚀 Features
+# 🚀 Features Overview
 
-### 👨‍🎓 Students
+## 👨‍🎓 Student Portal
 
-- View available courses & sections  
-- Register for sections with:
-  - Real-time seat availability
+- 🔍 View all available courses & sections  
+- 📝 Register with:
+  - Real-time seat validation  
   - Timetable clash detection  
-- View personal timetable  
-- View grades  
-- View attendance percentage  
-- Blocked access when suspended  
-
-### 👨‍🏫 Instructors
-
-- Manage assigned sections  
-- Create sections (time, room, capacity)  
-- View enrolled students  
-- Enter grades  
-- Mark attendance (`Present` / `Absent` / `Excused`)  
-- Report disciplinary issues  
-
-### 🛡️ Admins
-
-- Dashboard with system-wide analytics  
-- Manage programs, courses, sections  
-- Manage users (students, instructors)  
-- Review disciplinary reports  
-- Suspend / revoke suspension  
-- Override enrollment capacity  
+- 📅 View personal weekly timetable  
+- 📊 View grades  
+- 📈 Attendance percentage tracking  
+- 🚫 Access blocked automatically when suspended  
 
 ---
 
-## 🏛️ System Logic
+## 👨‍🏫 Instructor Portal
 
-The system follows a strict academic workflow:
-
-1. Admin creates **Program** & **Course**  
-2. Instructor creates **Section** (time, room, seat limit)  
-3. Student registers for a section  
-4. Transaction safely updates seat count (with deadlock handling)  
-5. Student gets timetable, grades, and attendance visibility  
-
----
-
-## 🔐 Role-Based Access Control (RBAC)
-
-| Role       | Permissions                                                |
-|-----------|-------------------------------------------------------------|
-| **Admin**     | Full control of system & academic entities               |
-| **Instructor**| Manages sections, attendance, grades                     |
-| **Student**   | Registers for sections, views timetable, grades, attendance |
+- 📚 Manage assigned sections  
+- ➕ Create sections (room, time, capacity)  
+- 👥 View enrolled students  
+- 📝 Enter grades  
+- ✔️ Mark attendance (`Present`, `Absent`, `Excused`)  
+- ⚠️ Report disciplinary issues  
 
 ---
 
-## 🛠️ Tech Stack
+## 🛡️ Admin Portal
 
-### Frontend
-- [Next.js](https://nextjs.org/) (React framework)  
-- Tailwind CSS  
-- Lucide React (Icons)  
-
-### Backend
-- Next.js API Routes (Serverless functions)  
-- TypeScript  
-- [NextAuth.js](https://next-auth.js.org/) (Credentials provider)  
-
-### Database
-- MySQL (relational database)  
-
-### Containerization & Deployment
-- Docker & Docker Compose  
-- Ready for deployment to platforms like Vercel with a managed MySQL database  
+- 📊 Dashboard with system-wide analytics  
+- 🧩 Manage programs, courses, sections  
+- 👥 Manage all users (students, instructors)  
+- ⚖️ Review disciplinary reports  
+- 🔒 Suspend or reinstate students  
+- 📈 Override enrollment capacity  
 
 ---
 
-## 📋 Database Schema (ER Diagram)
+# 🏛️ Academic Workflow
+
+1️⃣ **Admin** creates program & course  
+2️⃣ **Instructor** schedules sections  
+3️⃣ **Student** registers for a section  
+4️⃣ System performs:
+- Transactional seat update  
+- Timetable conflict check  
+- Optional waitlisting  
+5️⃣ Student receives:
+- Timetable  
+- Grades  
+- Attendance overview  
+
+---
+
+# 🔐 Role-Based Access Control (RBAC)
+
+| 🧑 Role        | 🎯 Permissions                                                |
+|---------------|----------------------------------------------------------------|
+| **Admin**     | Full control of system & academic entities                     |
+| **Instructor**| Manages sections, attendance, grades                           |
+| **Student**   | Registers for sections, views timetable, grades, attendance    |
+
+---
+
+# 🗄️ Database Schema (ER Diagram)
 
 ```mermaid
 erDiagram
     USERS ||--o{ ENROLLMENTS : "enrolls in"
     USERS ||--o{ SECTIONS : "teaches"
     USERS ||--o{ DISCIPLINARY_REPORTS : "receives/reports"
-    USERS ||--o{ ATTENDANCE : "has record"
-    
+    USERS ||--o{ ATTENDANCE : "attendance"
+
     PROGRAMS ||--o{ COURSES : "contains"
     COURSES ||--o{ SECTIONS : "has instances"
-    
-    SECTIONS ||--o{ ENROLLMENTS : "has students"
-    SECTIONS ||--o{ ATTENDANCE : "tracks"
-    
+
+    SECTIONS ||--o{ ENROLLMENTS : "contains"
+    SECTIONS ||--o{ ATTENDANCE : "records"
+
     ROOMS ||--o{ SECTIONS : "hosts"
     TIMESLOTS ||--o{ SECTIONS : "schedules"
 
@@ -174,68 +161,71 @@ erDiagram
 
 ---
 
-## 📌 Use Case Diagram
+# 🎭 Use Case Representation (Flowchart Version)
 
 ```mermaid
-usecaseDiagram
-    actor Admin
-    actor Instructor
-    actor Student
+flowchart TB
+    %% Actors
+    Admin([👑 Admin])
+    Instructor([👨‍🏫 Instructor])
+    Student([👨‍🎓 Student])
 
-    Admin --> (Manage Users)
-    Admin --> (Create Program)
-    Admin --> (Create Course)
-    Admin --> (Manage Sections)
-    Admin --> (View System Analytics)
-    Admin --> (Handle Disciplinary Actions)
+    %% Admin use cases
+    Admin --> AU1[Manage Users]
+    Admin --> AU2[Create Program]
+    Admin --> AU3[Create Course]
+    Admin --> AU4[Manage Sections]
+    Admin --> AU5[View System Analytics]
+    Admin --> AU6[Handle Disciplinary Actions]
 
-    Instructor --> (Create Section)
-    Instructor --> (Update Section Capacity)
-    Instructor --> (View Enrolled Students)
-    Instructor --> (Enter Grades)
-    Instructor --> (Mark Attendance)
-    Instructor --> (Report Disciplinary Issue)
+    %% Instructor use cases
+    Instructor --> IU1[Create Section]
+    Instructor --> IU2[Update Section Capacity]
+    Instructor --> IU3[View Enrolled Students]
+    Instructor --> IU4[Enter Grades]
+    Instructor --> IU5[Mark Attendance]
+    Instructor --> IU6[Report Disciplinary Issue]
 
-    Student --> (View Courses & Sections)
-    Student --> (Register for Section)
-    Student --> (View Timetable)
-    Student --> (View Grades)
-    Student --> (View Attendance)
+    %% Student use cases
+    Student --> SU1[View Courses & Sections]
+    Student --> SU2[Register for Section]
+    Student --> SU3[View Timetable]
+    Student --> SU4[View Grades]
+    Student --> SU5[View Attendance]
 ```
 
 ---
 
-## 🔄 Flowchart: Main Logic (Admin → Instructor → Student)
+# 🔄 Main Workflow (Admin → Instructor → Student)
 
 ```mermaid
 flowchart TD
-    A[Start] --> B[Admin Creates Program]
+    A([Start]) --> B[Admin Creates Program]
     B --> C[Admin Creates Course]
     C --> D[Instructor Logs In]
-    D --> E[Instructor Creates Section<br>(Room, Time, Capacity)]
+    D --> E["Instructor Creates Section (Room, Time, Capacity)"]
     E --> F[Section Published]
     F --> G[Student Logs In]
-    G --> H[Student Views Available Sections]
+    G --> H[Student Browses Sections]
 
     H --> I{Seat Available?}
     I -->|Yes| J[Check Timetable Clash]
-    I -->|No| W[Waitlist Student]
+    I -->|No| W[Add to Waitlist]
 
     J --> K{Clash?}
     K -->|No| L[Enroll Student Transaction]
-    K -->|Yes| M[Show Conflict Error]
+    K -->|Yes| H
 
-    L --> N[Update Seat Count Atomically]
-    N --> O[Create Enrollment Record]
-    O --> P[Student Views Timetable]
+    L --> M[Update Seat Count Atomically]
+    M --> N[Create Enrollment Record]
+    N --> O[Student Views Timetable]
 
-    W --> P
-    M --> H
+    W --> O
 ```
 
 ---
 
-## 🔁 Sequence Diagram: Transactional Enrollment
+# 🔁 Transactional Enrollment (Sequence Diagram)
 
 ```mermaid
 sequenceDiagram
@@ -262,7 +252,7 @@ sequenceDiagram
 
 ---
 
-## 🗂️ Project Structure
+# 📁 Project Structure
 
 ```text
 university-system/
@@ -279,30 +269,23 @@ university-system/
 
 ---
 
-## ⚙️ Setup Instructions
+# ⚙️ Setup Instructions
 
-### Prerequisites
+## 🧩 Prerequisites
 
-- Node.js (v18+)
-- Docker & Docker Compose
+- Node.js (v18+)  
+- Docker & Docker Compose  
 - MySQL client (optional, for manual DB inspection)
 
-### 1️⃣ Clone the Repository
-
-```bash
-git clone <repository-url>
-cd university-system
-```
-
-### 2️⃣ Install Dependencies
+## 📥 Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 3️⃣ Environment Configuration
+## ⚙️ Environment Configuration
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the project root:
 
 ```env
 DB_HOST=localhost
@@ -313,13 +296,13 @@ NEXTAUTH_SECRET=your_super_secret_key
 NEXTAUTH_URL=http://localhost:3000
 ```
 
-### 4️⃣ Start MySQL with Docker
+## 🐬 Start MySQL with Docker
 
 ```bash
 docker-compose up -d
 ```
 
-### 5️⃣ Initialize Database Schema
+## 🏗️ Initialize Database Schema
 
 ```bash
 npx ts-node scripts/init_db.ts
@@ -328,57 +311,57 @@ npx ts-node scripts/update_schema_revocation.ts
 npx ts-node scripts/update_schema_attendance.ts
 ```
 
-### 6️⃣ Start the Development Server
+## ▶️ Start the Development Server
 
 ```bash
 npm run dev
 ```
 
-Open: <http://localhost:3000>
+Open: **http://localhost:3000**
 
 ---
 
-## 🔑 Default Logins
+# 🔑 Default Logins
 
-| Role       | Email                    | Password      |
-|-----------|--------------------------|---------------|
-| Admin     | admin@university.com     | admin123      |
-| Instructor| instructor@university.com| password123   |
-| Student   | student@university.com   | password123   |
+| Role         | Email                      | Password    |
+|--------------|----------------------------|-------------|
+| 👑 Admin      | admin@university.com       | admin123    |
+| 👨‍🏫 Instructor | instructor@university.com | password123 |
+| 👨‍🎓 Student   | student@university.com     | password123 |
 
 ---
 
-## 🧪 Testing & Verification
+# 🧪 Testing & Verification
 
 Use the `scripts/` directory to simulate and verify:
 
-- Seat limit behavior  
-- Enrollment deadlocks  
-- Waitlist movement  
-- Disciplinary checks  
-- Attendance updates  
+- ✅ Seat limit enforcement  
+- 🔁 Enrollment deadlocks (transaction handling)  
+- 📥 Waitlist behavior and movement  
+- ⚖️ Disciplinary actions & suspensions  
+- 📝 Attendance updates and calculations  
 
-Additional browser-based verification steps can be documented in `walkthrough.md`.
-
----
-
-## 📄 License
-
-This project is open-source and available under the **MIT License**.
+Additional browser-based walkthroughs can be documented in `walkthrough.md`.
 
 ---
 
-## ☁️ Cloud Deployment (Vercel)
+# ☁️ Cloud Deployment (Vercel)
 
-When deploying to Vercel, you must use a **cloud database** (e.g., Aiven, PlanetScale, etc.) instead of a local one.
+For deployment on Vercel, use a **cloud-hosted MySQL database** (e.g., Aiven, PlanetScale, Neon).
 
 Configure these environment variables in Vercel:
 
-- `DB_HOST`
-- `DB_USER`
-- `DB_PASSWORD`
-- `DB_NAME`
-- `DB_PORT`
-- `DB_SSL` (set to `"true"`)
+- `DB_HOST`  
+- `DB_USER`  
+- `DB_PASSWORD`  
+- `DB_NAME`  
+- `DB_PORT`  
+- `DB_SSL=true`  
 
-Ensure your cloud MySQL instance allows external connections from Vercel and uses SSL if required.
+Ensure your database accepts secure external connections from Vercel.
+
+---
+
+# 📄 License
+
+This project is open-source and available under the **MIT License**.
